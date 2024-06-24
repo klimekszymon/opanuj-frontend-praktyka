@@ -1,31 +1,32 @@
 function validator() {
   const input = document.getElementById('input');
-  const button = document.getElementById('button');
-  const button2 = document.getElementById('button2');
+  const validate = document.getElementById('validate');
+  const clear = document.getElementById('clear');
   const result = document.getElementById('result');
 
-  button.addEventListener('click', () => {
-    if (input.value) {
-      if (Number.isInteger(input.value)) {
-        if (
-          Number(input.value) > 0 &&
-          Number(input.value) < 100 &&
-          Number(input.value) % 2 === 0
-        ) {
-          result.innerHTML = 'Valid';
-        } else {
-          result.innerHTML = 'Invalid';
-        }
-        result.innerHTML = 'Valid';
-      } else {
-        result.innerHTML = 'Invalid';
-      }
+  const minMaxValidator = (num) => {
+    if (num > 0 && num < 100) return true;
+    else return false;
+  };
+
+  const isEvenValidator = (num) => {
+    if (num % 2 === 0) return true;
+    else return false;
+  };
+
+  validate.addEventListener('click', () => {
+    console.log('validate', input.value);
+    if (!input.value) {
+      result.innerHTML = 'Empty input';
+    }
+    if (minMaxValidator(Number(input.value))  && isEvenValidator(Number(input.value))) {
+      result.innerHTML = 'Valid';
     } else {
       result.innerHTML = 'Invalid';
     }
   });
 
-  button2.addEventListener('click', () => {
+  clear.addEventListener('click', () => {
     input.value = '';
     result.innerHTML = '';
   });
