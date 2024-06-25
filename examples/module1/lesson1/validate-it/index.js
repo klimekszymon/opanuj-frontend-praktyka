@@ -1,31 +1,48 @@
 function validator() {
+  // Pobranie elementów z DOM
   const input = document.getElementById('input');
-  const button = document.getElementById('button');
-  const button2 = document.getElementById('button2');
+  const validate = document.getElementById('validate');
+  const clear = document.getElementById('clear');
   const result = document.getElementById('result');
 
-  button.addEventListener('click', () => {
-    if (input.value) {
-      if (Number.isInteger(input.value)) {
-        if (
-          Number(input.value) > 0 &&
-          Number(input.value) < 100 &&
-          Number(input.value) % 2 === 0
-        ) {
-          result.innerHTML = 'Valid';
-        } else {
-          result.innerHTML = 'Invalid';
-        }
-        result.innerHTML = 'Valid';
-      } else {
-        result.innerHTML = 'Invalid';
+  // Funkcje walidujące
+  const notEmpty = (value) => value !== '' || 'Value cannot be empty';
+  const isNumber = (value) =>
+    typeof value === 'number' || 'Value must be a number';
+  const isEven = (value) => value % 2 === 0 || 'Value must be even';
+  const isInRange = (value) =>
+    (value > 0 && value < 100) || 'Value must be in range 0-100';
+
+  // Funkcja walidująca
+  function validateInput(value, ...validators) {
+    const errors = [];
+
+    validators.forEach((validator) => {
+      const result = validator(value);
+      if (result !== true) {
+        errors.push(result);
       }
+    });
+
+    return errors.length > 0 ? errors : true;
+  }
+  validate.addEventListener('click', () => {
+    // Użycie funkcji walidującej
+    const validationResult = validateInput(
+      Number(input.value),
+      notEmpty,
+      isNumber,
+      isInRange,
+      isEven
+    );
+    if (validationResult === true) {
+      result.innerHTML = 'Valid';
     } else {
-      result.innerHTML = 'Invalid';
+      result.innerHTML = `Invalid ${validationResult.join(', ')}`;
     }
   });
 
-  button2.addEventListener('click', () => {
+  clear.addEventListener('click', () => {
     input.value = '';
     result.innerHTML = '';
   });
