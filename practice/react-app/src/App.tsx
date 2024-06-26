@@ -1,35 +1,62 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// import './App.css'
+import { operations } from './hooks/useMathOperations';
+
+// Enhanced button component for visual feedback and accessibility
+const OperationButton = ({ operation, onExecute }) => (
+  <button
+    aria-label={`Calculate ${operation.name}`}
+    key={operation.name}
+    className="bg-blue-200 px-2 py-4 text-lg hover:bg-blue-500 hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform transform active:scale-95"
+    onClick={() => onExecute(operation.function)}
+    style={{ cursor: 'pointer' }}
+  >
+    {operation.symbol}
+  </button>
+);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [firstNumber, setFirstNumber] = useState<number>(0);
+  const [secondNumber, setSecondNumber] = useState<number>(0);
+  const [result, setResult] = useState<number | string>(0);
+
+  const handleOperation = (
+    operation: (num1: number, num2: number) => number
+  ) => {
+    setResult(operation(firstNumber, secondNumber));
+  };
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="max-w-md mx-auto mt-10">
+      <div className="grid grid-cols-2 gap-x-4">
+        <input
+          type="number"
+          className="rounded-md shadow-md p-4"
+          value={firstNumber}
+          onChange={(e) => setFirstNumber(parseFloat(e.target.value))}
+        />
+        <input
+          type="number"
+          className="rounded-md shadow-md p-4"
+          value={secondNumber}
+          onChange={(e) => setSecondNumber(parseFloat(e.target.value))}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="grid grid-cols-4 gap-x-4 my-4">
+        {operations.map((operation) => (
+          <OperationButton
+            key={operation.name}
+            operation={operation}
+            onExecute={handleOperation}
+          />
+        ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <div className="text-center text-lg font-semibold p-4 bg-gray-100 rounded shadow">
+        Result: {result}
+      </div>
+    </div>
+  );
 }
 
 export default App
