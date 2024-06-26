@@ -26,7 +26,7 @@ const CalculatorApp = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-md mx-auto mt-10">
       <div className="grid grid-cols-2 gap-x-4">
         <input
           type="number"
@@ -50,7 +50,9 @@ const CalculatorApp = () => {
           />
         ))}
       </div>
-      <div>Result: {result}</div>
+      <div className="text-center text-lg font-semibold p-4 bg-gray-100 rounded shadow">
+        Result: {result}
+      </div>
     </div>
   );
 };
