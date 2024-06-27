@@ -6,6 +6,7 @@ import { useGuessingGame } from './composables/useGuessingGame';
 
 // components
 import CountryList from './components/CountryList.vue';
+import SearchInput from './components/SearchInput.vue';
 // Reactive states specific to this component
 const mode = ref<string>('view'); // 'view' for viewing mode, 'guess' for guessing mode
 
@@ -31,17 +32,8 @@ onMounted(fetchCountries);
         <button @click="toggleMode">{{ mode === 'view' ? 'Switch to Guessing Mode' : 'Switch to Viewing Mode'
             }}</button>
         <div v-if="mode === 'view'">
-
             <div class="search-page p-4">
-                <div class="flex justify-between mb-4">
-                    <input type="text" v-model="searchQuery"
-                        placeholder="Search by name, currency, language, or capital"
-                        class="search-input w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-4">
-                    <select v-model="sortOption" class="p-2 border border-gray-300 rounded-md shadow-sm">
-                        <option value="name">Sort by Name</option>
-                        <option value="population">Sort by Population</option>
-                    </select>
-                </div>
+                <SearchInput v-model:search-query="searchQuery" v-model:sort-option="sortOption" />
                 <CountryList :countries="filteredCountries" />
             </div>
         </div>
