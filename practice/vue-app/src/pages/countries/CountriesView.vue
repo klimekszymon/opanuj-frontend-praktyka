@@ -2,11 +2,15 @@
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
+
 const countries = ref([]);
 const filteredCountries = ref([]);
 const searchQuery = ref('');
-const sortOption = ref('name'); // 'name' for alphabetical, 'population' for population
-
+const sortOption = ref('name');
+const mode = ref('view'); // 'view' for viewing mode, 'guess' for guessing mode
+const currentGuessCountry = ref(null);
+const userGuess = ref('');
+const guessFeedback = ref('');
 
 const fetchCountries = async () => {
   try {
@@ -49,11 +53,37 @@ const sortCountries = () => {
   }
 };
 
-watch(sortOption, sortCountries); // Re-sort when sort option changes
+const selectRandomCountry = () => {
+  const randomIndex = Math.floor(Math.random() * countries.value.length);
+  currentGuessCountry.value = countries.value[randomIndex];
+};
 
+const checkGuess = () => {
+  if (userGuess.value.toLowerCase() === currentGuessCountry.value.name.toLowerCase()) {
+    guessFeedback.value = 'Correct!';
+  } else {
+    guessFeedback.value = 'Wrong, try again!';
+  }
+};
+
+const toggleMode = () => {
+  if (mode.value === 'view') {
+    mode.value = 'guess';
+    selectRandomCountry();
+  } else {
+    mode.value = 'view';
+  }
+  guessFeedback.value = ''; // Reset feedback
+};
+
+watch(sortOption, sortCountries);
 onMounted(fetchCountries);
 </script>
 <template>
+  <div class="search-page p-4">
+    <button @click="toggleMode">{{ mode === 'view' ? 'Switch to Guessing Mode' : 'Switch to Viewing Mode' }}</button>
+    <div v-if="mode === 'view'">
+
     <div class="search-page p-4">
       <div class="flex justify-between mb-4">
         <input type="text" v-model="searchQuery" placeholder="Search by name, currency, language, or capital" @input="filterCountries"
@@ -70,4 +100,23 @@ onMounted(fetchCountries);
         </div>
       </div>
     </div>
+</div>
+<div v-else class="guessing-mode mt-8">
+      <div class="flex flex-col items-center justify-center">
+        <img :src="currentGuessCountry?.flag" alt="Guess the country" class="w-32 h-20 mb-4">
+        <input type="text" v-model="userGuess" placeholder="Enter country name" class="form-input mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <div class="flex space-x-4 mt-4">
+          <button @click="checkGuess" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Check
+          </button>
+          <button @click="selectRandomCountry" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+            Next Flag
+          </button>
+        </div>
+        <div class="mt-4 text-lg font-medium" :class="{'text-green-500': guessFeedback === 'Correct!', 'text-red-500': guessFeedback === 'Wrong, try again!'}">
+          {{ guessFeedback }}
+        </div>
+      </div>
+    </div>
+  </div>
   </template>
