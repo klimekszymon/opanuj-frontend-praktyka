@@ -67,15 +67,16 @@ onMounted(fetchCountries);
             </span>
             Nighty mode
         </button>
-        <div class="flex flex-col items-center justify-center" style="min-height: 25vh;">
+        <div class="flex flex-col items-center justify-center" style="min-height: 05vh;">
 
             <h1
                 class="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-teal-400 pb-12">
                 {{ mode === 'view' ? 'Country Flags Overview' : 'Identify the Flag' }}
             </h1>
-            <button @click="toggleMode" class="mb-4 mt-12 bg-gradient-to-r from-pink-500 to-pink-300 text-white font-bold py-2 px-4 rounded-full hover:from-pink-700 hover:to-pink-500 transition duration-300 ease-in-out transform hover:scale-105">
-    {{ mode === 'view' ? 'Switch to Flag Guessing Mode' : 'Switch to Flags Overview' }}
-  </button>
+            <button @click="toggleMode"
+                class=" mt-4 bg-gradient-to-r from-pink-500 to-pink-300 text-white font-bold py-2 px-8 rounded-full hover:from-pink-700 hover:to-pink-500 transition duration-300 ease-in-out transform hover:scale-105">
+                {{ mode === 'view' ? 'Switch to Flag Guessing Mode' : 'Switch to Flags Overview' }}
+            </button>
 
         </div>
         <!-- <DarkButton @dark-switch="onDarkSwitch" /> -->
@@ -85,11 +86,13 @@ onMounted(fetchCountries);
                 <CountryList :countries="filteredCountries" :night-mode="darkmode" />
             </div>
         </div>
-        <div v-else class="guessing-mode mt-8 bg-coolGray-100 dark:bg-coolGray-800 p-4 rounded-lg shadow transition-opacity duration-500 ease-in-out">
+        <div v-else
+            class="guessing-mode mt-8 bg-coolGray-100 dark:bg-coolGray-800 p-4 rounded-lg shadow transition-opacity duration-500 ease-in-out">
             <div class="flex flex-col items-center justify-center">
                 <transition name="slide-left" mode="out-in">
-  <img v-if="currentGuessCountry" :src="currentGuessCountry?.flag" :alt="currentGuessCountry?.name" :key="currentGuessCountry?.name" class="w-96 h-60 mb-4">
-</transition>
+                    <img v-if="currentGuessCountry" :src="currentGuessCountry?.flag" :alt="currentGuessCountry?.name"
+                        :key="currentGuessCountry?.name" class="w-96 h-60 mb-4">
+                </transition>
                 <!-- <img :src="currentGuessCountry?.flag" alt="Guess the country" class="w-96 h-60 mb-4"> -->
                 <!-- Adjusted input width to match the flag width -->
                 <input type="text" v-model="userGuess" placeholder="Enter country name"
@@ -121,11 +124,14 @@ onMounted(fetchCountries);
     </div>
 </template>
 <style scoped>
-.slide-left-enter-active, .slide-left-leave-active {
-  transition: transform 0.5s ease;
+.slide-left-enter-active,
+.slide-left-leave-active {
+    transition: transform 0.5s ease;
 }
-.slide-left-enter, .slide-left-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
+
+.slide-left-enter,
+.slide-left-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
 }
 </style>
