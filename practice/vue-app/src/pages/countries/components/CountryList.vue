@@ -1,13 +1,18 @@
-  <script setup lang="ts">
-  import CountryItem from './CountryItem.vue';
-  import { Country } from '../types';
+<script setup lang="ts">
+import CountryItem from './CountryItem.vue';
+import { Country } from '../types';
+
+// Define props with nightMode
 defineProps<{
-    countries: Country[];
-  }>();
-  </script>
+  countries: Country[];
+  nightMode: boolean;
+}>();
+</script>
+
 <template>
-    <div class="countries-list mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <CountryItem v-for="country in countries" :key="country.name" :country="country" />
-    </div>
-  </template>
-  
+  <!-- Bind class based on nightMode -->
+  <div :class="['grid-container grid sm:grid-cols-4 md:grid-cols-4 2 lg:grid-cols-8 xl:grid-cols-10 gap-4', { 'night-mode': nightMode }]">
+    <!-- Pass nightMode to CountryItem -->
+    <CountryItem v-for="country in countries" :key="country.name" :country="country" :nightMode="nightMode" />
+  </div>
+</template>
