@@ -43,9 +43,9 @@ onMounted(fetchCountries);
 </script>
 <template>
   <div
-    class="search-page p-4"
-    :class="{ 'dark:bg-gray-900': darkmode, 'bg-blue-50': !darkmode }"
+    class="search-page p-4 pt-12"
   >
+    <!-- :class="{ 'dark:bg-gray-900': darkmode, 'bg-blue-50': !darkmode }" -->
     <div
       class="flex flex-col items-center justify-center"
       style="min-height: 05vh"
