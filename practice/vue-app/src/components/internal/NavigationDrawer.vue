@@ -6,6 +6,10 @@ import { useUser } from "@/composables/useUser";
 const { session, login, logout } = useUser();
 
 const allLinks = [
+  ["Inżynieria jakości - tydzień 1", "/day-1-welcome", true],
+  ["Inżynieria jakości i testy jednostkowe", "/exercises/1-unit-tests"],
+  ["Testy end-to-end (e2e)", "/exercises/1-end"],  
+  ["Bezpieczna komunikacja z API", "/exercises/1-end"],  
   ["Day 1", "/day-1-welcome", true],
   ["Exercise 1 Start", "/exercises/1-begin"],
   ["Exercise 1 End", "/exercises/1-end"],
