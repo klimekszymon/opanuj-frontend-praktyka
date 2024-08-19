@@ -1,53 +1,17 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router";
-import { computed, onMounted, onUnmounted } from "vue";
-import { useUser } from "@/composables/useUser";
+import { useRoute, useRouter } from 'vue-router';
+import { computed, onMounted, onUnmounted } from 'vue';
+import { useUser } from '@/composables/useUser';
 
 const { session, login, logout } = useUser();
 
 const allLinks = [
-  ["Inżynieria jakości - tydzień 1", "/week-1-module", true],
-  ["Inżynieria jakości i testy jednostkowe", "/lessons/1-unit-tests"],
-  // ["Testy end-to-end (e2e)", "/exercises/1-end"],  
-  // ["Bezpieczna komunikacja z API", "/exercises/1-end"],  
-  ["App: Zgadnij Flagę", "/countries/app-country-flags", true],
-  // ["Exercise 1 Start", "/exercises/1-begin"],
-  // ["Exercise 1 End", "/exercises/1-end"],
-  // ["Exercise 2 Start", "/exercises/2-begin"],
-  // ["Exercise 2 End", "/exercises/2-end"],
-  // ["Exercise 3 Start", "/exercises/3-begin"],
-  // ["Exercise 3 End", "/exercises/3-end"],
-  // ["Exercise 4 Start", "/exercises/4-begin"],
-  // ["Exercise 4 End", "/exercises/4-end"],
-  // ["Exercise 4 Bonus Start 🔥", "/exercises/4-zbonus-begin"],
-  // ["Exercise 4 Bonus End 🔥", "/exercises/4-zbonus-end"],
-  // ["Exercise 5 Start", "/exercises/5-begin"],
-  // ["Exercise 5 End", "/exercises/5-end"],
-  // ["Day 2", "/day-2-welcome", true],
-  // ["Exercise 6 Start", "/exercises/6-begin"],
-  // ["Exercise 6 End", "/exercises/6-end"],
-  // ["Exercise 7 Start", "/exercises/7-begin"],
-  // ["Exercise 7 End", "/exercises/7-end"],
-  // ["Exercise 8 Start", "/exercises/8-begin"],
-  // ["Exercise 8 End", "/exercises/8-end"],
-  // ["Exercise 9 Start", "/exercises/9-begin"],
-  // ["Exercise 9 End", "/exercises/9-end"],
-  // ["Exercise 10 Start", "/exercises/10-begin"],
-  // ["Exercise 10 End", "/exercises/10-end"],
-  // ["Day 3", "/day-3-welcome", true],
-  // ["Exercise 11 Start", "/exercises/11-begin"],
-  // ["Exercise 11 End", "/exercises/11-end"],
-  // ["Exercise 12 Start", "/exercises/12-begin"],
-  // ["Exercise 12 End", "/exercises/12-end"],
-  // ["Exercise 12 Bonus Start 🔥", "/exercises/12-zbonus-begin"],
-  // ["Exercise 12 Bonus End 🔥", "/exercises/12-zbonus-end"],
-  // ["Exercise 13 Start", "/exercises/13-begin"],
-  // ["Exercise 13 End", "/exercises/13-end"],
-  // ["Day 4", "/day-4-welcome", true],
-  // ["Live Quiz", "/live-quiz/quiz"],
-  // ["Feature Challenge", "/challenges/feature-challenge"],
-  // ["Bug Challenge", "/challenges/bug-challenge"],
-  // ["Take Home Practice Exam", "/take-home-exam"],
+  ['Inżynieria jakości - tydzień 1', '/week-1-module', true],
+  ['Inżynieria jakości i testy jednostkowe', '/lessons/1-unit-tests'],
+  // ["Testy end-to-end (e2e)", "/exercises/1-end"],
+  // ["Bezpieczna komunikacja z API", "/exercises/1-end"],
+  ['App: Kalkulator', '/calculator/app-calculator', true],
+  ['App: Zgadnij Flagę', '/countries/app-country-flags', true],
 ];
 
 const route = useRoute();
@@ -55,28 +19,28 @@ const router = useRouter();
 
 // left arrow handler
 function leftArrowHandler(e) {
-  if (e.key === "ArrowLeft" && e.shiftKey && prevLink.value[1]) {
+  if (e.key === 'ArrowLeft' && e.shiftKey && prevLink.value[1]) {
     router.push(prevLink.value[1]);
   }
 }
 onUnmounted(() =>
-  document.body.removeEventListener("keydown", leftArrowHandler),
+  document.body.removeEventListener('keydown', leftArrowHandler),
 );
-onMounted(() => document.body.addEventListener("keydown", leftArrowHandler));
+onMounted(() => document.body.addEventListener('keydown', leftArrowHandler));
 
 // right arrow handler
 function rightArrowHandler(e) {
-  if (e.key === "ArrowRight" && e.shiftKey && nextLink.value) {
+  if (e.key === 'ArrowRight' && e.shiftKey && nextLink.value) {
     router.push(nextLink.value[1]);
   }
 }
-onMounted(() => document.body.addEventListener("keydown", rightArrowHandler));
-onMounted(() => document.body.addEventListener("keydown", rightArrowHandler));
+onMounted(() => document.body.addEventListener('keydown', rightArrowHandler));
+onMounted(() => document.body.addEventListener('keydown', rightArrowHandler));
 
 // Links
 
 const activeLink = computed(() => {
-  return allLinks.find((link) => link[1] === route.path) || ["", "/"];
+  return allLinks.find((link) => link[1] === route.path) || ['', '/'];
 });
 
 const nextLink = computed(() => {
@@ -88,7 +52,7 @@ const nextLink = computed(() => {
 const prevLink = computed(() => {
   const currentIndex = allLinks.findIndex((link) => link[1] === route.path);
   const prevIndex = currentIndex - 1;
-  return allLinks[prevIndex] || ["", "/"];
+  return allLinks[prevIndex] || ['', '/'];
 });
 </script>
 <template>
@@ -96,7 +60,9 @@ const prevLink = computed(() => {
     class="fixed z-[99999999] flex justify-between w-full p-3 text-2xl bg-gray-100 dark:bg-neutral"
   >
     <h1 class="flex items-center gap-3">
-      <RouterLink to="/"><Icon icon="material-symbols:home" /></RouterLink>
+      <RouterLink to="/">
+        <Icon icon="material-symbols:home" />
+      </RouterLink>
       {{ activeLink[0] }}
     </h1>
 
@@ -167,8 +133,8 @@ const prevLink = computed(() => {
       :class="{ invisible: route.path === '/' }"
       title="⇧ ◀"
     >
-      <Icon icon="material-symbols:chevron-left"></Icon
-    ></RouterLink>
+      <Icon icon="material-symbols:chevron-left"></Icon>
+    </RouterLink>
     <RouterLink :to="nextLink[1]" v-if="nextLink" title="⇧ ▶">
       <Icon icon="material-symbols:chevron-right"></Icon>
     </RouterLink>

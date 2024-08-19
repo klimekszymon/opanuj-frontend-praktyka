@@ -4,6 +4,7 @@ import Index from "../views/index.vue";
 const views = import.meta.glob("@/views/*.vue");
 const lessonViews = import.meta.glob("@/views/lessons/*.vue");
 const countriesViews = import.meta.glob("@/views/countries/*.vue");
+const calculatorViews = import.meta.glob("@/views/calculator/*.vue");
 // const exampleViews = import.meta.glob("@/views/examples/*.vue");
 // const exerciseViews = import.meta.glob("@/views/exercises/*.vue");
 // const liveQuizViews = import.meta.glob("@/views/live-quiz/*.vue");
@@ -16,6 +17,7 @@ const router = createRouter({
     ...generateRoutes(views),
     ...generateRoutes(lessonViews, "/lessons"),
     ...generateRoutes(countriesViews, "/countries"),
+    ...generateRoutes(calculatorViews, "/calculator"),
     // ...generateRoutes(exampleViews, "/examples"),
     // ...generateRoutes(exerciseViews, "/exercises"),
     // ...generateRoutes(liveQuizViews, "/live-quiz"),
